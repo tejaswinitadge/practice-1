@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 import logging
 
-from src.services.pnr_status import get_pnr_status
+from src.services.pnr_status import set_pnr_status
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -34,7 +34,7 @@ def get_pnr(
 ):
     try:
         logger.info(f"Fetching PNR status for {pnr}")
-        result = get_pnr_status(pnr)
+        result = set_pnr_status(pnr)
 
         if not result:
             raise HTTPException(status_code=404, detail="PNR not found")
@@ -52,7 +52,7 @@ def upgrade_class(
 ):
     try:
         logger.info(f"Checking upgrade possibility for {pnr}")
-        result = get_pnr_status(pnr)
+        result = set_pnr_status(pnr)
 
         if not result:
             raise HTTPException(status_code=404, detail="PNR not found")
